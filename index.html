@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Secure Blockchain Voting System</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="bg-orb orb-one"></div>
+    <div class="bg-orb orb-two"></div>
+    <div class="bg-grid"></div>
+    <main class="app">
+      <section id="authSection" class="card auth-card">
+        <h1>Smart E-Voting Portal</h1>
+        <p class="subtitle">Verify voter identity with Name + Voter ID + Demo OTP.</p>
+
+        <form id="otpRequestForm" class="form">
+          <label>Registered Full Name</label>
+          <input type="text" id="memberName" placeholder="e.g. Aarav Sharma" required />
+          <label>Voter ID</label>
+          <input type="text" id="voterId" placeholder="e.g. VTR1001" />
+
+          <div id="aadhaarFields" class="hidden">
+            <div class="notice">
+              Not in voter list? Enter Aadhaar + DOB for OTP verification (18+ only).
+            </div>
+            <label>Aadhaar Number</label>
+            <input type="password" id="aadhaarInput" inputmode="numeric" placeholder="12-digit Aadhaar" />
+            <label>Date of Birth</label>
+            <input type="date" id="dobInput" />
+          </div>
+
+          <button id="otpRequestBtn" type="submit" class="btn primary">Generate Demo OTP</button>
+        </form>
+
+        <form id="otpVerifyForm" class="form hidden">
+          <label>Enter OTP</label>
+          <input type="text" id="otpInput" placeholder="6-digit OTP" required />
+          <button type="submit" class="btn success">Verify & Continue</button>
+        </form>
+
+        <p id="authMessage" class="message"></p>
+      </section>
+
+      <section id="dashboardSection" class="hidden">
+        <header class="topbar">
+          <div>
+            <h2>Voting Booth</h2>
+            <p id="userInfo"></p>
+          </div>
+          <div class="top-actions">
+            <nav class="tabs" aria-label="Portal pages">
+              <button id="tabVote" class="tab active" type="button">Cast Vote</button>
+              <button id="tabResults" class="tab" type="button">Counting Dashboard</button>
+              <button id="tabChain" class="tab" type="button">Blockchain / Hash</button>
+            </nav>
+            <button id="logoutBtn" class="btn danger">Logout</button>
+          </div>
+        </header>
+
+        <section id="pageVote">
+          <article class="card wizard">
+            <h3>Guided Ballot</h3>
+            <p class="subtitle">
+              Your State and Constituency are fixed based on your Voter ID.
+            </p>
+
+            <div class="voter-scope">
+              <div class="scope-item">
+                <span class="scope-label">State</span>
+                <span id="fixedState" class="scope-value">-</span>
+              </div>
+              <div class="scope-item">
+                <span class="scope-label">Constituency</span>
+                <span id="fixedConstituency" class="scope-value">-</span>
+              </div>
+            </div>
+
+            <div class="steps">
+              <span id="dot1" class="dot active">1</span>
+              <span id="dot2" class="dot">2</span>
+            </div>
+
+            <div id="step1" class="step">
+              <h4>Paper Ballot</h4>
+              <p class="subtitle">Mark one candidate as your ballot choice.</p>
+              <div class="ballot-header">
+                <span>Official Ballot Sheet</span>
+                <span class="ballot-stamp">BLUE MARK</span>
+              </div>
+              <select id="candidateSelect" class="hidden"></select>
+              <div id="candidatePreview" class="ballot-paper"></div>
+            </div>
+            <div id="step2" class="step hidden">
+              <h4>Review and Submit</h4>
+              <p id="reviewText"></p>
+            </div>
+
+            <div class="wizard-actions">
+              <button id="backBtn" class="btn ghost" type="button">Back</button>
+              <button id="nextBtn" class="btn primary" type="button">Next</button>
+              <button id="submitVoteBtn" class="btn success hidden" type="button">Submit Vote</button>
+            </div>
+            <p id="voteMessage" class="message"></p>
+          </article>
+        </section>
+
+        <section id="pageResults" class="hidden">
+          <div class="grid narrow-top">
+            <article class="card">
+              <h3>Final Count Dashboard</h3>
+              <p class="subtitle">Visible 15 minutes after voting starts.</p>
+              <div id="resultsList"></div>
+              <p id="totalVotes" class="total-votes"></p>
+            </article>
+          </div>
+        </section>
+
+        <section id="pageChain" class="hidden">
+          <article class="card">
+            <h3>Blockchain Blocks</h3>
+            <p class="subtitle">
+              Each vote mines a block linked with previous hash.
+            </p>
+            <div id="blockchainView" class="blocks"></div>
+          </article>
+        </section>
+      </section>
+    </main>
+
+    <script src="/script.js"></script>
+  </body>
+</html>
